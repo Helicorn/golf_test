@@ -44,7 +44,6 @@ public class AdminRankController {
 		sv.setEndrow(sv.getStartrow()+limit-1);
 		
 		List<ScorecardVO> needList = scBoardService.getNeedUpdateScorecardList(sv); //업데이트해야할 스코어카드 목록
-		//String nickname = rankingService.getNickname(sc_id);
 						
 		int maxpage = (int)((double)needCount/limit + 0.95); //총 페이지 수;
 		int startpage = (((int)((double)page/10 + 0.9))-1)*10 + 1; //시작 페이지;
@@ -83,7 +82,6 @@ public class AdminRankController {
 		
 		if(sb != null) {
 			if(scBoardService.getUpdated(info) == 0) {				
-				//request.setAttribute("date", sc_playdate);	
 				request.setAttribute("no", sc_no);
 				request.setAttribute("id", sc_id);
 				request.setAttribute("sb", sb);
@@ -144,8 +142,8 @@ public class AdminRankController {
 	}
 	
 	//스코어카드 삭제
-	@RequestMapping("admin/admin_insertCard_del")
-	public void admin_InsertCard_del(HttpServletRequest request) throws Exception {
+	@RequestMapping("/admin_insertCard_del")
+	public String admin_InsertCard_del(HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		
 		String s_id = request.getParameter("s_id");
@@ -153,10 +151,12 @@ public class AdminRankController {
 		
 		request.setAttribute("s_id", s_id);
 		request.setAttribute("s_date", s_date);
+		
+		return "redirect:admin/admin_insertCard_del";
 	}
 	
 	//스코어카드 삭제 확인
-	@RequestMapping("admin/admin_insertCard_del_ok")
+	@RequestMapping("/admin_insertCard_del_ok")
 	public String admin_InsertCard_del_ok(HttpServletRequest request, HttpServletResponse response, ScorecardVO sv) throws Exception {
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
@@ -164,10 +164,10 @@ public class AdminRankController {
 		PrintWriter out = response.getWriter();
 		
 		String s_id = request.getParameter("s_id");
-		String s_date = request.getParameter("s_date");
+		int s_no = Integer.parseInt(request.getParameter("s_no"));
 		
 		sv.setS_id(s_id);
-		sv.setS_date(s_date);
+		sv.setS_no(s_no);
 		
 		scBoardService.delCard(sv);
 		
@@ -175,6 +175,6 @@ public class AdminRankController {
 		out.println("alert('삭제 완료')");
 		out.println("<script>");
 		
-		return "redirect:/admin/admin_insertCard";
+		return "redirect:admin/admin_insertCard";
 	}
 }

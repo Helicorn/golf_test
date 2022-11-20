@@ -198,9 +198,9 @@
 
 	</form>
 	<hr>
-	<form method="post" action="admin/admin_insertCard_del">
+	<form method="post" action="/admin_insertCard_del_ok">
 		<input type="hidden" name="s_id" value="${id }">
-		<input type="hidden" name="s_date" value="${date }">
+		<input type="hidden" name="s_no" value="${no }">
 		잘못올린 게시글이나 사진양식이 잘못된 경우 : <input type="submit" class="checkBtn_admin" value="반려">
 	</form>
 	
